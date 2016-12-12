@@ -21,6 +21,10 @@ private $id_command;
  		}
  		$req->closeCursor();
  	}
+ 
+ public function getId(){
+  return $this->id;
+ }
 
  	public function get_ref(){//return the reference 
  		return $this->ref;
