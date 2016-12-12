@@ -1,22 +1,4 @@
-<?php
 
-Class Command{
-	$private $date;
-	$private $id_user;
-	$private $id;
-
-
-
-	public function __construct($user){
-		 include("sql.php");
- 		$req = $bdd->prepare("SELECT * FROM command WHERE utilisateur_id =:user");
- 		$req->execute(array(':user'=>$user));
- 		while($data = $req->fetch()){
- 			$this->date = $data['date'];
- 			$this->id_user = $data['utilisateur_id'];
- 			$this->id = $data['id'];
- 		}
- 		$req->closeCursor();
 <?php
 
 Class Command{
