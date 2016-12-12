@@ -1,64 +1,100 @@
+
 <?php
-Class Command{
-	private $date;
-	private $id_user;
-	private $id;
 
+/***********************************************************************
+************************Modifié par ilangovane 20:15********************
+*********************************************************************/
+Class Consigne
+{
+  private $state;//boolean type , during [begin, end] the output is on/off
+  private $begin;//datetime type , the beginning of the instruction
+  private $end; //datetime type , the end of the instruction
+  private $id;//id of the consigne 
 
-	public function __construct($id_user){//par exemple id de luttilsateur session
-		 include("../global/sql.php");
- 		$req = $bdd->prepare("SELECT * FROM commande WHERE utilisateur_id =:user");
- 		$req->execute(array(':user'=>$id_user));
- 		while($data = $req->fetch()) {
- 			$this->date = $data['date'];
- 			$this->id_user = $data['utilisateur_id'];
- 			$this->id = $data['id'];
- 		}
- 		$req->closeCursor();
-	}
+  public function __construct($id){
+   include("../global/sql.php");
+   $req = $bdd->prepare('SELECT * FROM consigne WHERE id = :id');
+   $req->execute(array(':id'=>$id));
+   while($data = $req->fetch()){
+     $this->state = $data['etat'];
+     $this->begin = $data['date_debut'];
+     $this->end = $data['date_fin'];
 
-	public function get_Date(){
-		return $this->date;
-	}
-
-	public function get_IdUser(){
-		return $this->id_user;
-	}
-
-	public function get_Id(){
-		return $this->id;
-	}
-
-	public function set_Date($date){ //$date = 'YYYY-MM-DD' only 
-		include("../global/sql.php");
-		 $req = $bdd->prepare("UPDATE commande SET date = :newdate WHERE id= :id");
- 		$req->execute(array(':newdate' => $date , ':id'=>$this->id));
- 		$req->closeCursor();
- 		$this->date = $date;
-	}
-
-	public function set_IdUser($new_user){
-		include("../global/sql.php");
-		$req = $bdd->prepare("UPDATE commande SET utilisateur_id = :new_user WHERE id= :id");
- 		$req->execute(array(':new_user'=> $new_user , ':id'=> $this->id));
- 		$req->closeCursor();
- 		$this->id_user = $new_user;
-	}
+     $this->id = $data['id'];
+   }
+   $req->closeCursor();
+    
+  }
+  
+  public function getId(){
+    return $this->id;
+  }
+  public function getState(){
+  return $this->state;
+  }
+  
+  public function getBeginDatetime(){
+  return $this->begin;
+  }
+  
+  public function getEndDatetime(){
+  return $this->end;
+  }
+  public function setState($bool){
+    include("../global/sql.php");
+    $req = $bdd->prepare('UPDATE consigne SET etat = :state WHERE id = :id');
+    $req->execute(array(':state'=>$bool,':id'=>$this->id));
+    $req->closeCursor();
+    $this->state = $bool;
+    
+  }
+  
+  public function setBeginDatetime($datetime){ //format YYYY-MM-DD hh:mm:ss
+    include("../global/sql.php");
+    $req = $bdd->prepare('UPDATE consigne SET date_debut = :date1 WHERE id = :id');
+    $req->execute(array(':date1'=>$datetime,':id'=>$this->id));
+    $req->closeCursor();
+    $this->begin = $datetime;
+  }
+  
+  public function setEndDatetime($datetime){ //format YYYY-MM-DD hh:mm:ss
+    include("../global/sql.php");
+    $req = $bdd->prepare('UPDATE consigne SET date_debut = :date1 WHERE id = :id');
+    $req->execute(array(':date1'=>$datetime,':id'=>$this->id));
+    $req->closeCursor();
+    $this->end = $datetime;
+  }
+  
+  
+  
+  
 }
 
 
-/* TEST : toute les fonctions marche très bien
-$command = new Command(1);
-echo 'La date de la commande est le : ' . $command->get_Date() . '<br/>';
-echo 'Le proprietaire l\'utilisateur_id = ' .$command->get_IdUser() . '<br/>';
-echo 'L\'id de la commande est :'. $command->get_Id() . '<br/>';
+/* La classe marche très bien
+$consign = new Consigne(1);
+echo 'id : ' . $consign->getId() . '<br/>';
+echo 'Etat : ' . $consign->getState() . '<br/>' ;
+echo 'Debut : ' . $consign->getBeginDatetime() . '<br/>' ;
+echo 'Fin :' . $consign->getEndDatetime() . '<br/>' ;
+
+echo $consign->setState(1) . '<br/>' ;
+echo $consign->setBeginDatetime('2010-08-02 11:30:23') . '<br/>' ;
+echo $consign->getEndDatetime('2020-08-02 11:30:23') . '<br/>' ;
 
 
-echo $command->set_Date('2013-01-02 12:55:32') . '<br/>';
-echo $command->set_IdUser(2) . '<br/>';
 
-echo 'La date de la commande est le : ' . $command->get_Date() . '<br/>';
-echo 'Le proprietaire l\utilisateur_id = ' .$command->get_IdUser() . '<br/>';
-echo 'L\'id de la commande est :' . $command->get_Id() . '<br/>';
+echo 'Etat : ' . $consign->getState() . '<br/>' ;
+echo 'Debut : ' . $consign->getBeginDatetime() . '<br/>' ;
+echo 'Fin :' . $consign->getEndDatetime() . '<br/>' ;
 */
+
+
+
+
+
+
+
+
+
 ?>
