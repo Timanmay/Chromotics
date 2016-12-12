@@ -8,7 +8,7 @@ Class Command{
 
 
 
-	public function __construct($user){
+	public function __construct($user){ //$user peut être $_SESSION['id_utilisateur']
 		 include("../global/sql.php");
  		$req = $bdd->prepare("SELECT * FROM command WHERE utilisateur_id =:user");
  		$req->execute(array(':user'=>$user));
