@@ -12,7 +12,7 @@ class Router {
      */
     public function __construct()
     {
-        $this->currentAddress = "127.0.0.1:82";
+        $this->currentAddress = $_SERVER["SERVER_ADDR"] . ":" . $_SERVER["SERVER_PORT"];
         $this->baseDirection = "connection";
     }
 
