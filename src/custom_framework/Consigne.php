@@ -2,6 +2,7 @@
 <?php
 Class Consigne
 {
+  private $id;
   private $state;//boolean type , during [begin, end] the output is on/off
   private $begin;//datetime type , the beginning of the instruction
   private $end; //datetime type , the end of the instruction
@@ -12,8 +13,9 @@ Class Consigne
    $req->execute(array(':id'=>$id));
    while($data = $req->fetch()){
      $this->state = $data['etat'];
-     $this->begin = $date['date_debut'];
-     $this->end = $date['date_fin'];
+     $this->begin = $data['date_debut'];
+     $this->end = $data['date_fin'];
+     $this->id = $data['id'];
    }
    $req->closeCursor();
     
