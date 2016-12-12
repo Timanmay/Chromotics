@@ -1,7 +1,15 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: lyriaaw
- * Date: 09/12/16
- * Time: 15:33
- */
+<?php include_once("custom_framework/Router.php");?>
+<?php $router = new Router(); ?>
+<header>
+    <h1>Chromotics</h1>
+
+
+    <div>
+        <li>
+            <ul><a href="<?php echo $router->createUrl("connection");?> ">Accueil</a></ul>
+        </li>
+    </div>
+
+
+    
+</header>
