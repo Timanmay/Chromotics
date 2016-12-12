@@ -35,7 +35,7 @@ Class Consigne
     $req = $bdd->prepare('UPDATE consigne SET state = :bit WHERE id = :id');
     $req->execute(array(':bit'=>$bool,':id'=>$this->id));
     $req->closeCursor();
-    $this->begin = $datetime;
+    $this->state = $bool;
     
   }
   
