@@ -8,7 +8,7 @@ private $id_user_command;
 private $id_command;
 
  	public function __construct($reference){
- 		include("sql.php");
+ 		include("../global/sql.php");
  		$req = $bdd->prepare("SELECT * FROM cemac WHERE reference = :ref");
  		$req->execute(array(':ref'=>$reference));
  		while($info = $req->fetch()){
@@ -43,7 +43,7 @@ private $id_command;
  	}
 
  	public function set_ref($new_ref){
- 		include("sql.php");
+ 		include("../global/sql.php");
  		$req = $bdd->prepare("UPDATE cemac SET reference = :new WHERE ref= :old");
  		$req->execute(array(':new'=>$new_ref , ':old'=>$this->ref));
  		$req->closeCursor();
@@ -51,7 +51,7 @@ private $id_command;
  	}
 
  	public function set_id_room($new_idroom){
- 		 include("sql.php");
+ 		include("../global/sql.php");
  		$req = $bdd->prepare("UPDATE cemac SET salle_id = :new WHERE salle_id= :old");
  		$req->execute(array(':new'=>$new_idroom, ':old'=>$this->id_room));
  		$req->closeCursor();
@@ -59,7 +59,7 @@ private $id_command;
  	}
 
  	public function set_id_user_command($new_buyer){
- 		 include("sql.php");
+ 		include("../global/sql.php");
  		$req = $bdd->prepare("UPDATE cemac SET commande_utilisateur_id = :new WHERE commande_utilisateur_id = :old");
  		$req->execute(array(':new'=>$new_buyer, ':old'=>$this->id_user_command));
  		$req->closeCursor();
@@ -67,7 +67,7 @@ private $id_command;
  	}
 
  	public function set_id_command($new_idcommand){
- 		 		 include("sql.php");
+ 		include("../global/sql.php");
  		$req = $bdd->prepare("UPDATE cemac SET command_id = :new WHERE command_id= :old");
  		$req->execute(array(':new'=>$new_idcommand, ':old'=>$this->id_command));
  		$req->closeCursor();
