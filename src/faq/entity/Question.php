@@ -1,6 +1,9 @@
 <?php
 
+use CustomFramework\JsonRestManager;
+
 include_once("custom_framework/Database.php");
+include_once("custom_framework/JsonRestManager.php");
 
 /**
  * Created by PhpStorm.
@@ -66,23 +69,46 @@ class Question {
      */
 
 
+    public function display() {
+        echo "Question : " . $this->question . " - Response : " . $this->response;
+    }
+
+
 
     public static function findById($id) {
+        echo "Searching for Question with id = " . $id  . "<br>";
 
         $bdd = Database::getDb();
 
-        $req = $bdd->prepare("SELECT * FROM questions WHERE id = :id");
+        $req = $bdd->prepare('SELECT * FROM questions WHERE id = :id');
+
         $req->execute(array(
-            'id' => $id
+            ':id' => $id
         ));
 
-        $datas = $req->fetch();
+        $dbResponse = $req->fetch();
 
-        echo "Found question : " . sizeof($datas);
+        $req->closeCursor();
+        return JsonRestManager::createObject($dbResponse, Question::class);
 
 
+    }
 
 
+    public static function findAll() {
+        $questions = array();
+
+        $bdd = Database::getDb();
+
+        $req = $bdd->query('SELECT * FROM questions');
+
+        while ($dbResponse = $req->fetch()) {
+            array_push($questions, JsonRestManager::createObject($dbResponse, Question::class));
+        }
+
+        $req->closeCursor();
+
+        return $questions;
     }
 
 

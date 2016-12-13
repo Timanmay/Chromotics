@@ -1,3 +1,7 @@
 <?php
 
-$question = Question::findById(2);
+foreach (Question::findAll() as $question) {
+    $question->display();
+    echo "<br>";
+}
+
